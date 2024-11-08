@@ -2,6 +2,8 @@
 
 public static class Sort
 {
+    #region Selection sort
+
     public static int[] Selection(int[] source)
     {
         for (int i = 0; i < source.Length; i++)
@@ -17,6 +19,10 @@ public static class Sort
 
         return source;
     }
+
+    #endregion
+
+    #region MyRegion
 
     public static int[] Insertion(int[] source)
     {
@@ -39,6 +45,10 @@ public static class Sort
         return source;
     }
 
+    #endregion
+
+    #region Bubble sort
+
     public static int[] Bubble(int[] source)
     {
         for (int i = 0; i < source.Length - 1; i++)
@@ -54,6 +64,10 @@ public static class Sort
 
         return source;
     }
+
+    #endregion
+
+    #region Shell sort
 
     public static int[] Shell(int[] source)
     {
@@ -84,6 +98,10 @@ public static class Sort
         return source;
     }
 
+    #endregion
+
+    #region Merge sort
+
     public static int[] Merge(int[] source, int left, int right)
     {
         if (left < right)
@@ -110,6 +128,7 @@ public static class Sort
             {
                 (source[leftSubsetItemIdx], source[rightSubsetItemIdx]) = (source[rightSubsetItemIdx], source[leftSubsetItemIdx]);
             }
+
             return;
         }
 
@@ -121,7 +140,7 @@ public static class Sort
                 rightSubsetItemIdx++;
                 sortedSourceIdx++;
             }
-            
+
             else
             {
                 sortedSource[sortedSourceIdx] = source[leftSubsetItemIdx];
@@ -137,6 +156,7 @@ public static class Sort
                     sortedSourceIdx++;
                     leftSubsetItemIdx++;
                 }
+
                 break;
             }
 
@@ -148,6 +168,7 @@ public static class Sort
                     sortedSourceIdx++;
                     rightSubsetItemIdx++;
                 }
+
                 break;
             }
         }
@@ -157,4 +178,44 @@ public static class Sort
             source[i] = sortedSource[i];
         }
     }
+
+    #endregion
+
+    #region Quick sort
+
+    public static int[] Quick(int[] source, int low, int high)
+    {
+        var pivot = low;
+        var initialHigh = high;
+        
+        if (low == high || source.Length <= 1) return source;
+        
+        //Find the partition (the right var)
+        while (low <= high)
+        {
+            if (source[low] > source[high])
+            {
+                (source[low], source[high]) = (source[high], source[low]);
+            }
+
+            if (source[low] <= source[pivot])
+            {
+                ++low;
+            }
+
+            if (source[high] >= source[pivot])
+            {
+                --high;
+            }
+        }
+
+        //Swap pivot with the partitioned position
+        (source[high], source[pivot]) = (source[pivot], source[high]);
+        Quick(source, pivot, high);
+        Quick(source, low, initialHigh);
+
+        return source;
+    }
+
+    #endregion
 }
